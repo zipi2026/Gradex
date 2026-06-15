@@ -41,7 +41,9 @@ class SynonymClient:
 
         if response.status_code != 200:
             # HTTP Error
-            raise Exception(f"Failed to fetch data from {url}. HTTP Status: {response.status_code}")
+            #raise Exception(f"#################Failed to fetch data from {url}. HTTP Status: {response.status_code}")
+            self._cache[word] = []
+            return []
 
         try:
             # ניתוח ה-HTML
@@ -56,11 +58,15 @@ class SynonymClient:
             synonyms = [elem.text.strip() for elem in synonym_elements]
         except Exception as e:
             # בעיה בחילוץ האלמנטים מה-HTML
-            raise Exception(f"Error extracting synonyms from HTML: {e}")
+            #raise Exception(f"Error extracting synonyms from HTML: {e}")
+            # במקרה של בעיה בחילוץ, מחזירים רשימה ריקה במקום Exception
+            synonyms = []
 
         if not synonyms:
             # אם הרשימה ריקה, אולי שינוי ב-HTML או class לא קיים
-            raise Exception("No synonyms found. Check if the HTML structure or class name has changed.")
+            #raise Exception("No synonyms found. Check if the HTML structure or class name has changed.")
+            # אם אין נרדפות, מחזירים רשימה ריקה
+            synonyms = []
       #  print(word,synonyms)
         self._cache[word] = synonyms
         return synonyms
@@ -87,4 +93,8 @@ class SynonymClient:
                 #print(f"Failed to get synonyms for '{word2}': {e}")
                 synonyms2 = []
 
-            return word2 in synonyms1 or word1 in synonyms2
+            if word2 in synonyms1 or word1 in synonyms2:
+                print(word1, word2)
+                return True
+            else:
+                return False

@@ -7,10 +7,10 @@ def extract_teacher_keywords(teacher_answer: str, kw_model: KeyBERT, threshold: 
 
     keywords = kw_model.extract_keywords(
         teacher_answer,
-        keyphrase_ngram_range=(1,2),
-        top_n=20,
+        keyphrase_ngram_range=(2,3),
+        top_n=5,
         use_mmr = True,  # מקדם מגוונות
-        diversity = 0.7  # עד כמה המילים שונות זו מזו
+        diversity = 0.2  # עד כמה המילים שונות זו מזו
     )
     print(teacher_answer)
 
@@ -32,7 +32,9 @@ def extract_teacher_keywords(teacher_answer: str, kw_model: KeyBERT, threshold: 
 # דוגמת הרצה
 # ──────────────────────────────
 if __name__ == "__main__":
-    model = SentenceTransformer(r"/server/my_model")
+    model = SentenceTransformer(
+        r"C:\Users\kuperbergz\PycharmProjects\CleverCheck\server\my_model"
+    )
     kw_model = KeyBERT(model=model)
 
     sentences = [
