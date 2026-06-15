@@ -1,5 +1,5 @@
 from sentence_transformers import SentenceTransformer
-
+from stanza_service import get_lemma_text
 from check_nagative_in_student_answer import contains_negation
 from clean_student_answer import clean_student_answer
 from key_words_teacher_answer import extract_teacher_keywords
@@ -12,8 +12,13 @@ def prepare_teacher_keywords(teacher_answer: str, kw_model) -> List[str]:
     מחזירה את רשימת מילות המפתח של המורה.
     פעולה זו מתבצעת פעם אחת בלבד.
     """
-    teacher_keywords = extract_teacher_keywords(teacher_answer, kw_model)
-    return [kw[0] for kw in teacher_keywords]
+    lemma_teacher_answer = get_lemma_text(teacher_answer)
+    print("LEMMA TEACHER ANSWER:", lemma_teacher_answer)
+    teacher_keywords = extract_teacher_keywords(lemma_teacher_answer, kw_model)
+    teacher_keywords=[kw[0] for kw in teacher_keywords]
+    print("TEACHER KEYWORDS:", teacher_keywords)
+    print("=" * 200)
+    return teacher_keywords
 
 def evaluate_answer(
         student_answer: str,
@@ -35,8 +40,11 @@ def evaluate_answer(
     # -------------------------
     # שלב 1 - ניקוי תשובת תלמיד
     # -------------------------
+    lemma_student_answer = get_lemma_text(student_answer)
+    print("LEMMA STUDENT ANSWER:", lemma_student_answer)
+
     cleaned_student = clean_student_answer(
-        student_answer,
+        lemma_student_answer,
         kw_model
     )
     #print("cleaned_student =", cleaned_student)
@@ -66,7 +74,7 @@ def evaluate_answer(
 
     matched_keywords = []
     missing_keywords = []
-    print(teacher_keywords)
+    #print(teacher_keywords)
 
     all_words = set()
     for keyword in teacher_keywords:
@@ -80,7 +88,6 @@ def evaluate_answer(
     # -------------------------
     # שלב 3 - התאמת מושגים
     # -------------------------
-    all_words = set()
     for keyword in teacher_keywords:
 
         keyword_words = keyword.split()
@@ -101,8 +108,8 @@ def evaluate_answer(
             if (synonym_match and not direct_match):
                 print("synonym****************************************************************")
 
-            #if not (direct_match or synonym_match):
-            if not (direct_match):
+            if not (direct_match or synonym_match):
+            #if not (direct_match):
                 found = False
                 break
 
@@ -249,6 +256,7 @@ if __name__ == "__main__":
     question = "מה תפקידו של מסד נתונים?"
 
     teacher_answer2 = "מסד נתונים משמש לאחסון וניהול מידע."
+    print("teacher_answer: ", teacher_answer2)
 
     test_answers2 = [
         # התאמה מלאה
@@ -311,6 +319,7 @@ if __name__ == "__main__":
             kw_model=kw_model,
             synonym_client=SynonymClient()
         )
+
         print("Student:", answer)
         print("Result :", result)
         print("=" * 80)
