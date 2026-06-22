@@ -10,6 +10,8 @@ from controllers.questions_controller import questions_blueprint
 from controllers.student_answers_controller import student_answers_blueprint
 from controllers.student_exams_controller import student_exams_blueprint
 from controllers.teacher_answers_controller import teacher_answers_blueprint
+from flask_cors import CORS
+from config import Config
 
 #from server.controllers.exam_classes_controller import exam_classes_blueprint
 #from server.controllers.teacher_classes_controller import teacher_classes_blueprint
@@ -27,7 +29,8 @@ else:
     print("DB connection failed ❌")
 
 app = Flask(__name__)
-
+CORS(app, supports_credentials=True)
+app.config["SECRET_KEY"] = Config.SECRET_KEY
 #init_db(app)
 
 # 1. טוען מודל
