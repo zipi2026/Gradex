@@ -1,6 +1,7 @@
-import jwt
 import datetime
-from config import Config
+import jwt
+from server.config import Config
+
 
 def create_token(user: dict):
     payload = {
@@ -11,9 +12,15 @@ def create_token(user: dict):
 
     return jwt.encode(payload, Config.SECRET_KEY, algorithm="HS256")
 
+
 def decode_token(token: str):
-    return jwt.decode(
-        token,
-        Config.SECRET_KEY,
-        algorithms=["HS256"]
-    )
+    try:
+        return jwt.decode(
+            token,
+            Config.SECRET_KEY,
+            algorithms=["HS256"]
+        )
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None
