@@ -1,7 +1,7 @@
 import torch
 from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
-model_path = r"C:\git\CleverCheck\server\my_model\hebert_model_download"
+model_path = r"C:\git\CleverCheck\server\my_model\hebert_model_download (2)"
 
 tokenizer = AutoTokenizer.from_pretrained(model_path, local_files_only=True)
 model = AutoModelForSequenceClassification.from_pretrained(model_path, local_files_only=True)
@@ -9,9 +9,9 @@ model.eval()
 
 
 def build_input(question, teacher_answer, student_answer):
-    return f"""שאלה: {question}
-תשובת מורה: {teacher_answer}
-תשובת תלמיד: {student_answer}"""
+    return f"""[Q]{question}
+[T]{teacher_answer}
+[S]{student_answer}"""
 
 
 def grade_answer(question, teacher_answer, student_answer):
@@ -31,7 +31,7 @@ def grade_answer(question, teacher_answer, student_answer):
     score = outputs.logits.item()
 
     # אופציונלי: הגבלת טווח ל-0–1
-    score = max(0.0, min(1.0, score))
+
 
     return score
 

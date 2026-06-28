@@ -1,14 +1,31 @@
 """
-services/auth_service.py — בדיקת משתמשים (בהמשך יתחבר ל-DB)
+services/auth_service.py — בדיקת משתמשים
 """
+from werkzeug.security import check_password_hash
 
-def validate_user(username: str, password: str):
-    # כרגע דמו (בהמשך SQL)
-    if username == "admin" and password == "1234":
-        return {
-            "id": 1,
-            "role": "teacher",
-            "username": "admin"
-        }
+from server.repositories.student_repository import StudentRepository
 
-    return None
+
+def validate_user(db, username: str, password: str):
+    try:
+        student_id = int(username)
+    except ValueError:
+        return None
+
+    repo = StudentRepository(db)
+    student = repo.get_by_id(student_id)
+
+    if not student:
+        return None
+
+    if not student.is_active:
+        return None
+
+    if not check_password_hash(student.password_hash, password):
+        return None
+
+    return {
+        "id": student.id,
+        "role": "student",
+        "username": student.first_name
+    }

@@ -2,7 +2,10 @@ from flask import Blueprint, request, jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
+from server.db_connection import get_db
 from server.dtos.student_dto import StudentDTO
+from server.services.auth_service import validate_user
+from server.services.jwt_service import create_token
 from server.services.student_service import StudentService
 from server.repositories.student_repository import StudentRepository
 from server.models.student import Base
