@@ -35,6 +35,7 @@ class Student(Base):
     # =========================
     # RELATIONSHIPS
     # =========================
+    #user = relationship("User", back_populates="student")
     class_ = relationship("Class", back_populates="students")
 
     student_exams = relationship(

@@ -7,8 +7,8 @@ from typing import List
 print("LOADING STANZA...")
 _NLP = stanza.Pipeline(
     lang="he",
-    dir=r"C:\Users\kuperbergz\PycharmProjects\CleverCheck\server\my_model\stanza-he",
-    processors="tokenize,pos,lemma",
+    dir=r"C:\Users\kuperbergz\PycharmProjects\CleverCheck\server\stanza-he\resources",
+    processors="tokenize,pos,lemma,depparse",
     download_method=None,
     verbose=False
 )

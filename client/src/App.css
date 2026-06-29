@@ -1,3 +1,179 @@
+/* Home Page Styles */
+#home {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding: 20px;
+}
+
+.home-container {
+  position: relative;
+  width: 100%;
+  height: 100vh;
+}
+
+.home-background {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #f093fb 50%, #4facfe 75%, #00f2fe 100%);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  z-index: 0;
+}
+
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.home-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-section {
+  text-align: center;
+  max-width: 900px;
+  width: 100%;
+  padding: 40px 30px;
+  animation: fadeInUp 1s ease-out;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.brand-title {
+  font-size: clamp(3rem, 10vw, 5rem);
+  font-weight: 900;
+  color: #ffffff;
+  margin: 0;
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  letter-spacing: -2px;
+  margin-bottom: 15px;
+}
+
+.brand-subtitle {
+  font-size: clamp(1rem, 3vw, 1.5rem);
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0;
+  font-weight: 300;
+  margin-bottom: 40px;
+  letter-spacing: 0.5px;
+}
+
+.slogan-container {
+  margin: 50px 0;
+  padding: 30px 20px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border-radius: 15px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  animation: slideInDown 1s ease-out 0.3s both;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.slogan-hebrew {
+  font-size: clamp(1.2rem, 2.5vw, 2rem);
+  color: #ffffff;
+  font-weight: 700;
+  margin: 0 0 15px 0;
+  direction: rtl;
+  unicode-bidi: bidi-override;
+  line-height: 1.4;
+}
+
+.slogan-english {
+  font-size: clamp(0.9rem, 1.5vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.8);
+  font-weight: 400;
+  margin: 0;
+  font-style: italic;
+  line-height: 1.6;
+}
+
+.cta-section {
+  margin-top: 50px;
+  animation: slideInUp 1s ease-out 0.6s both;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.login-prompt {
+  font-size: clamp(1rem, 2vw, 1.2rem);
+  color: rgba(255, 255, 255, 0.9);
+  margin: 0 0 20px 0;
+  font-weight: 500;
+}
+
+.login-button {
+  display: inline-block;
+  padding: 16px 48px;
+  font-size: clamp(0.95rem, 1.5vw, 1.1rem);
+  font-weight: 600;
+  color: #667eea;
+  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  text-decoration: none;
+  border-radius: 50px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  border: none;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+}
+
+.login-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+  background: linear-gradient(135deg, #f0f0f0 0%, #ffffff 100%);
+}
+
+.login-button:active {
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
 .counter {
   font-size: 16px;
   padding: 5px 10px;

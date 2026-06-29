@@ -31,6 +31,8 @@ class Teacher(Base):
     # =========================
     # RELATIONSHIPS
     # =========================
+    #user = relationship("User", back_populates="teacher")
+
     exams = relationship(
         "Exam",
         back_populates="teacher"

@@ -2,7 +2,7 @@ import { SERVER_URL } from '../config'
 import type { User } from '../models/User'
 
 export interface LoginPayload {
-  email: string
+  username: string
   password: string
 }
 

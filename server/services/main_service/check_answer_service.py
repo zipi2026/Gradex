@@ -1,7 +1,7 @@
 from typing import List
 import re
 from keybert import KeyBERT
-from server.services.main_service.Synonym_reverso import SynonymClient
+from server.services.main_service.my_stanza_service.Synonym_reverso import SynonymClient
 from sentence_transformers import SentenceTransformer
 
 
