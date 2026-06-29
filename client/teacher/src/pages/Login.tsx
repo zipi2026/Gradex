@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link as RouterLink, useNavigate } from 'react-router-dom'
+import { /* Link as RouterLink, */ useNavigate } from 'react-router-dom'
 import { useForm, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { z } from 'zod'
@@ -8,7 +8,7 @@ import {
   Box,
   Button,
   Container,
-  Link,
+  /* Link, */
   Paper,
   Stack,
   TextField,
@@ -17,7 +17,7 @@ import {
 import { useAuth } from '../context/AuthContext'
 
 const loginSchema = z.object({
-  email: z.string().email('Enter a valid email address'),
+  username: z.string().min(1, 'Username is required'),
   password: z.string().min(6, 'Password must be at least 6 characters'),
 })
 
@@ -35,7 +35,7 @@ export default function LoginPage() {
   } = useForm<LoginFormValues>({
     resolver: zodResolver(loginSchema),
     defaultValues: {
-      email: '',
+      username: '',
       password: '',
     },
   })
@@ -58,10 +58,10 @@ export default function LoginPage() {
         <Stack spacing={3}>
           <Box>
             <Typography component="h1" variant="h5" gutterBottom>
-              Sign in
+              Student / Teacher Login
             </Typography>
             <Typography color="text.secondary" variant="body2">
-              Enter your email and password to access the CleverCheck dashboard.
+              Enter your email and password to access CleverCheck.
             </Typography>
           </Box>
 
@@ -70,17 +70,17 @@ export default function LoginPage() {
           <Box component="form" noValidate onSubmit={handleSubmit(onSubmit)}>
             <Stack spacing={2}>
               <Controller
-                name="email"
+                name="username"
                 control={control}
                 render={({ field }) => (
                   <TextField
                     {...field}
-                    label="Email"
-                    type="email"
+                    label="Username"
+                    type="text"
                     required
                     fullWidth
-                    error={Boolean(errors.email)}
-                    helperText={errors.email?.message}
+                    error={Boolean(errors.username)}
+                    helperText={errors.username?.message}
                   />
                 )}
               />
@@ -107,12 +107,14 @@ export default function LoginPage() {
             </Stack>
           </Box>
 
+          {/*
           <Typography variant="body2" color="text.secondary">
             Need an account?{' '}
             <Link component={RouterLink} to="/register">
               Register
             </Link>
           </Typography>
+          */}
         </Stack>
       </Paper>
     </Container>

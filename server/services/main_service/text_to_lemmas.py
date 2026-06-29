@@ -1,23 +1,36 @@
-from typing import List
-
 import stanza
-# -----------------------------
-# אתחול Stanza
-# -----------------------------
+
+def extract_lemmas(text, nlp):
+    if not isinstance(text, str):
+        text = str(text)
+
+    doc = nlp(text)
+
+    lemmas = []
+
+    for sent in doc.sentences:
+        for w in sent.words:
+            lemma = w.lemma
+
+            if not lemma or lemma.strip() == "":
+                continue
+
+            lemmas.append((w.text, lemma))  # שומר גם מילה מקורית וגם lemma
+
+    return lemmas
+
 
 nlp = stanza.Pipeline(
     lang="he",
-    dir=r"C:\Users\kuperbergz\PycharmProjects\CleverCheck\server\my_model\stanza-he",
-    processors="tokenize,pos,lemma",
-    download_method=None
+    dir=r"C:\Users\kuperbergz\PycharmProjects\CleverCheck\server\my_model\stanza-he\resources",
+    processors="tokenize,pos,lemma,depparse",
+    download_method=None,
+    verbose=False
 )
 
-# -----------------------------
-# פונקציה לעבודה על צורת בסיס
-# -----------------------------
-def text_to_lemmas(text: str) -> List[str]:
-    doc = nlp(text)
-    lemmas = [word.lemma for sent in doc.sentences for word in sent.words]
-    return lemmas
+text = "זרם מים טבעי"
 
-print(text_to_lemmas("מערכת ההפעלה מנהלת את משאבי המחשב"))
+result = extract_lemmas(text, nlp)
+
+for word, lemma in result:
+    print(f"{word} -> {lemma}")

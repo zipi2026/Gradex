@@ -1,9 +1,9 @@
 from sentence_transformers import SentenceTransformer
 from stanza_service import get_lemma_text
-from check_nagative_in_student_answer import contains_negation
+from server.services.main_service.my_stanza_service.check_nagative_in_answer import contains_negation
 from clean_student_answer import clean_student_answer
 from key_words_teacher_answer import extract_teacher_keywords
-from Synonym_reverso import SynonymClient
+from server.services.main_service.my_stanza_service.Synonym_reverso import SynonymClient
 from typing import Dict, List
 from keybert import KeyBERT
 

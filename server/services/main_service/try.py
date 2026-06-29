@@ -43,7 +43,7 @@
 import json
 
 with open(
-    r"C:\Users\kuperbergz\PycharmProjects\CleverCheck\server\my_model\stanza-he\resources.json",
+        r"/server/stanza-he\resources.json",
     encoding="utf8"
 ) as f:
     data = json.load(f)
